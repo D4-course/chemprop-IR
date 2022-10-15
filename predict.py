@@ -5,4 +5,5 @@ from chemprop.train import make_predictions
 
 if __name__ == '__main__':
     args = parse_predict_args()
+    print(args)
     make_predictions(args)

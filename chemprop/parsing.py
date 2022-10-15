@@ -262,9 +262,12 @@ def modify_predict_args(args: Namespace):
     makedirs(args.preds_path, isfile=True)
 
 
-def parse_predict_args() -> Namespace:
+def parse_predict_args(ckpt_dir=None) -> Namespace:
     parser = ArgumentParser()
     add_predict_args(parser)
+    print(parser)
+    # if ckpt_dir is not None:
+
     args = parser.parse_args()
     modify_predict_args(args)
 

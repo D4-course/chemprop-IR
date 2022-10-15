@@ -21,6 +21,7 @@ def make_predictions(args: Namespace, smiles: List[str] = None) -> List[Optional
     :param smiles: Smiles to make predictions on.
     :return: A list of lists of target predictions.
     """
+    print(f"Input Smiles {smiles}")
     if args.gpu is not None:
         torch.cuda.set_device(args.gpu)
 
@@ -126,59 +127,59 @@ def make_predictions(args: Namespace, smiles: List[str] = None) -> List[Optional
     test_smiles = full_data.smiles()
 
     # Write predictions
-    with open(args.preds_path, 'w') as f:
-        writer = csv.writer(f)
+    # with open(args.preds_path, 'w') as f:
+    #     writer = csv.writer(f)
 
-        header = []
+    #     header = []
 
-        if args.use_compound_names:
-            header.append('compound_names')
+    #     if args.use_compound_names:
+    #         header.append('compound_names')
 
-        header.append('smiles')
+    #     header.append('smiles')
 
-        if args.dataset_type == 'multiclass':
-            for name in args.task_names:
-                for i in range(args.multiclass_num_classes):
-                    header.append(name + '_class' + str(i))
-        else:
-            header.extend(args.task_names)
-            if args.ensemble_variance:
-                if args.dataset_type=='spectra':
-                    header.append('epi_unc')
-                else:
-                    header.extend([tn + "_epi_unc" for tn in args.task_names])
-        writer.writerow(header)
+    #     if args.dataset_type == 'multiclass':
+    #         for name in args.task_names:
+    #             for i in range(args.multiclass_num_classes):
+    #                 header.append(name + '_class' + str(i))
+    #     else:
+    #         header.extend(args.task_names)
+    #         if args.ensemble_variance:
+    #             if args.dataset_type=='spectra':
+    #                 header.append('epi_unc')
+    #             else:
+    #                 header.extend([tn + "_epi_unc" for tn in args.task_names])
+    #     writer.writerow(header)
 
-        for i in range(len(avg_preds)):
-            row = []
+    #     for i in range(len(avg_preds)):
+    #         row = []
 
-            if args.use_compound_names:
-                row.append(compound_names[i])
+    #         if args.use_compound_names:
+    #             row.append(compound_names[i])
 
-            row.append(test_smiles[i])
+    #         row.append(test_smiles[i])
 
-            if avg_preds[i] is not None:
-                if args.dataset_type == 'multiclass':
-                    for task_probs in avg_preds[i]:
-                        row.extend(task_probs)
-                else:
-                    row.extend(avg_preds[i])
-                    if args.ensemble_variance:
-                        if args.dataset_type=='spectra':
-                            row.append(epi_uncs[i])
-                        else:
-                            row.extend(epi_uncs[i])
-            else:
-                if args.dataset_type == 'multiclass':
-                    row.extend([''] * args.num_tasks * args.multiclass_num_classes)
-                else:
-                    row.extend([''] * args.num_tasks)
-                    if args.ensemble_variance:
-                        if args.dataset_type=='spectra':
-                            row.append('')
-                        else:
-                            row.extend([''] * args.num_tasks)
+    #         if avg_preds[i] is not None:
+    #             if args.dataset_type == 'multiclass':
+    #                 for task_probs in avg_preds[i]:
+    #                     row.extend(task_probs)
+    #             else:
+    #                 row.extend(avg_preds[i])
+    #                 if args.ensemble_variance:
+    #                     if args.dataset_type=='spectra':
+    #                         row.append(epi_uncs[i])
+    #                     else:
+    #                         row.extend(epi_uncs[i])
+    #         else:
+    #             if args.dataset_type == 'multiclass':
+    #                 row.extend([''] * args.num_tasks * args.multiclass_num_classes)
+    #             else:
+    #                 row.extend([''] * args.num_tasks)
+    #                 if args.ensemble_variance:
+    #                     if args.dataset_type=='spectra':
+    #                         row.append('')
+    #                     else:
+    #                         row.extend([''] * args.num_tasks)
 
-            writer.writerow(row)
+    #         writer.writerow(row)
 
     return avg_preds
