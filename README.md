@@ -1,4 +1,12 @@
-# D4 Course Project
+# D4 Course Project 1
+
+Shaantanu Kulkarni 2019102031
+Vishal Singh 2019102002
+
+Demo link : https://iiitaphyd-my.sharepoint.com/:v:/g/personal/shaantanu_kulkarni_students_iiit_ac_in/ET5OLV-Z1f9LpGjJ80BGgEkB3_5z2vHzP6vgyRvfPV2bMA?e=EwDCvt
+
+
+
 # Spectral Prediction
 This repository contains message passing neural networks for spectral predictions as described in the paper [Message Passing Neural Networks for Infrared Spectral Predictions](). The `chemprop-IR` architecture is an extension of `chemprop` described in the paper [Analyzing Learned Molecular Representations for Property Prediction](https://pubs.acs.org/doi/abs/10.1021/acs.jcim.9b00237) and available in the [chemprop GiHub repository](https://github.com/chemprop/chemprop). 
 
